@@ -120,7 +120,7 @@ ai-viral-shorts-backend/
 ├── app/                            # Main application package
 │   ├── api/                        # Route definitions
 │   │   ├── __init__.py
-│   │   ├── generate.py             # Endpoint to trigger video generation
+│   │   ├── dialogue.py             # Endpoint to trigger dialogue generation
 │   │   └── health.py               # Healthcheck/test endpoint
 │   │
 │   ├── core/                       # Core configuration
@@ -129,19 +129,15 @@ ai-viral-shorts-backend/
 │   │
 │   ├── services/                   # Business logic for each AI pipeline stage
 │   │   ├── __init__.py
-│   │   ├── script_gen.py           # Script generation using GPT
-│   │   ├── tts.py                  # Text-to-speech using ElevenLabs/Bark
-│   │   ├── character_video.py      # Talking head generation (e.g., D-ID, SadTalker)
-│   │   ├── edit.py                 # Video editing logic (FFmpeg, CapCut API)
-│   │   └── upload.py               # Upload to YouTube/TikTok/etc.
+│   │   ├── dialogue_gen.py           # Script generation using GPT
 │   │
 │   ├── models/                     # Pydantic models (request/response schemas)
 │   │   ├── __init__.py
-│   │   └── generate_models.py
+│   │   └── dialogue_models.py
 │   │
 │   ├── utils/                      # Utility functions and helpers
 │   │   ├── __init__.py
-│   │   └── whisper_transcribe.py   # Optional: Transcribe audio with Whisper AI
+│   │   └── 
 │   │
 │   └── main.py                     # FastAPI entry point (creates app instance)
 │
