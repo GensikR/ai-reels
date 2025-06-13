@@ -158,3 +158,4 @@ ai-viral-shorts-backend/
     app/core/config.py — Centralized config using Pydantic’s BaseSettings
 
     run.sh — Simple runner script for local development using uvicorn
+
