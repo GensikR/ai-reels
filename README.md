@@ -112,3 +112,53 @@ Extras:
     Add hashtags and viral captions
 
     Track views, likes, click-through rates
+
+📁 Project Folder Structure
+
+ai-viral-shorts-backend/
+│
+├── app/                            # Main application package
+│   ├── api/                        # Route definitions
+│   │   ├── __init__.py
+│   │   ├── generate.py             # Endpoint to trigger video generation
+│   │   └── health.py               # Healthcheck/test endpoint
+│   │
+│   ├── core/                       # Core configuration
+│   │   ├── __init__.py
+│   │   └── config.py               # Environment settings and secrets
+│   │
+│   ├── services/                   # Business logic for each AI pipeline stage
+│   │   ├── __init__.py
+│   │   ├── script_gen.py           # Script generation using GPT
+│   │   ├── tts.py                  # Text-to-speech using ElevenLabs/Bark
+│   │   ├── character_video.py      # Talking head generation (e.g., D-ID, SadTalker)
+│   │   ├── edit.py                 # Video editing logic (FFmpeg, CapCut API)
+│   │   └── upload.py               # Upload to YouTube/TikTok/etc.
+│   │
+│   ├── models/                     # Pydantic models (request/response schemas)
+│   │   ├── __init__.py
+│   │   └── generate_models.py
+│   │
+│   ├── utils/                      # Utility functions and helpers
+│   │   ├── __init__.py
+│   │   └── whisper_transcribe.py   # Optional: Transcribe audio with Whisper AI
+│   │
+│   └── main.py                     # FastAPI entry point (creates app instance)
+│
+├── .env                            # Environment variables (not committed)
+├── requirements.txt                # Pip dependency list
+├── environment.yml                 # Optional: Conda environment definition
+├── README.md                       # Project overview and instructions
+└── run.sh                          # Bash script to run the server locally
+
+🔍 Description of Key Folders and Files
+
+    app/api/ — Defines REST API routes (e.g., /generate)
+
+    app/services/ — Each AI task (script generation, TTS, animation, editing, upload) in modular service files
+
+    app/models/ — Pydantic schemas for request/response validation
+
+    app/core/config.py — Centralized config using Pydantic’s BaseSettings
+
+    run.sh — Simple runner script for local development using uvicorn
