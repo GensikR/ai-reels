@@ -1,126 +1,125 @@
-🧱 Pipeline Architecture: AI-Generated Viral Shorts
-💡 Summary
+# 🧱 Pipeline Architecture: AI-Generated Viral Shorts
+
+## 💡 Summary
 
 Generate viral short videos featuring nonhuman characters (monkey, yeti, alien, etc.) in a podcast-style format — using AI to create script, voice, animation, and video editing, producing engaging content optimized for social platforms.
-🛠️ Tech Stack
 
-    Backend: FastAPI (Python) — asynchronous, performant API framework
+## 🛠️ Tech Stack
 
-    AI Text Generation: OpenAI GPT-4 / GPT-3.5 API
+* **Backend**: FastAPI (Python) — asynchronous, performant API framework
+* **AI Text Generation**: OpenAI GPT-4 / GPT-3.5 API
+* **Text-to-Speech**: ElevenLabs API (primary), Bark by Suno, Play.ht
+* **Talking Head Video**: D-ID API, HeyGen, SadTalker
+* **Video Editing**: FFmpeg scripting, CapCut, Runway, Canva
+* **Frontend**: React (planned) — user input forms and video display
+* **Storage & Deployment**: Cloud storage (AWS S3, GCP Storage), Docker containers, cloud VM or serverless functions
+* **Misc**: Whisper AI for transcription, Pixabay/YouTube Audio Library for sound assets, Buffer/Metricool for social scheduling
 
-    Text-to-Speech: ElevenLabs API, Bark by Suno, Play.ht (choose based on cost and quality)
+---
 
-    Talking Head Video: D-ID API, HeyGen, or SadTalker for animated characters
+## 🔧 STAGE 1: Input / Topic Seed
 
-    Video Editing: FFmpeg scripting, CapCut, Runway, Canva (for overlays, captions, final polish)
+**Manual or Form Input**
 
-    Frontend: React (planned) — user input forms and video display
+* Enter topic idea (e.g., “Can a gorilla beat 100 humans?”)
+* Optional: User selects voice style and character (gorilla, alien, yeti)
 
-    Storage & Deployment: Cloud storage (AWS S3, GCP Storage), Docker containers, cloud VM or serverless functions
+---
 
-    Misc: Whisper AI for transcription, Pixabay/YouTube Audio Library for sound assets, Buffer/Metricool for social scheduling
+## 🤖 STAGE 2: Script Generation (Text)
 
-🔧 STAGE 1: Input / Topic Seed
+**Tool**: GPT-4 or GPT-3.5 via OpenAI API
 
-Manual or Form Input
+* Generate a short monologue (\~10–20 seconds)
+* Add slang, humor, or viral tone
 
-    Enter topic idea (e.g., “Can a gorilla beat 100 humans?”)
+**Prompt Template Example:**
 
-    Optional: User selects voice style and character (gorilla, alien, yeti)
+```
+Write a short, funny podcast-style monologue (15–20 seconds) from the point of view of a gorilla debating if it could defeat 100 unarmed humans. Make it sound confident, a little cocky, and slightly unhinged.
+```
 
-🤖 STAGE 2: Script Generation (Text)
+**Output**: Plain text script
 
-Tool: GPT-4 or GPT-3.5 via OpenAI API
+---
 
-    Generate a short monologue (~10–20 seconds)
+## 🎤 STAGE 3: Voice Generation (Text-to-Speech)
 
-    Add slang, humor, or viral tone
+**Tool Options:**
 
-    Example prompt template:
+* **ElevenLabs API** (Free tier: 10k characters/month)
+* Bark by Suno (Open-source, local or Colab)
+* Play.ht or TTSMonster (Web UI or API)
 
-        Write a short, funny podcast-style monologue (15–20 seconds) from the point of view of a gorilla debating if it could defeat 100 unarmed humans. Make it sound confident, a little cocky, and slightly unhinged.
+**Input**: Script text
+**Output**: Audio file (.mp3 or .wav)
 
-Output: Plain text script
-🎤 STAGE 3: Voice Generation (Text-to-Speech)
+---
 
-Tool Options:
+## 🧠 STAGE 4: Talking Character Generation (Audio + Face)
 
-    ElevenLabs API (Free tier: 10k characters/month)
+**Tool Options:**
 
-    Bark by Suno (Open-source, local or Colab)
+* D-ID API (Paid, Free trial)
+* HeyGen (Web only, high quality)
+* SadTalker (Free, local or Colab)
 
-    Play.ht or TTSMonster (Web UI or API)
+**Input:**
 
-Input: Script text
-Output: Audio file (.mp3 or .wav)
-🧠 STAGE 4: Talking Character Generation (Audio + Face)
+* Voiceover audio file
+* Character image (yeti, gorilla, alien, etc. — sourced from AI image tools like Bing Image Creator, Midjourney, Leonardo.ai)
 
-Tool Options:
+**Output**: Talking-head video clip (.mp4)
 
-    D-ID API (Paid, Free trial)
+---
 
-    HeyGen (Web only, high quality)
+## 🎮 STAGE 5: Video Editing & Subtitles
 
-    SadTalker (Free, local or Colab)
+**Tool Options:**
 
-Input:
+* CapCut Desktop/Web/Mobile (TikTok-ready, easiest)
+* FFmpeg (scripted automation for batch processing)
+* Runway (stylized backgrounds, free tier)
+* Canva Video (browser-based editor)
 
-    Voiceover audio file
+**Steps:**
 
-    Character image (yeti, gorilla, alien, etc. — sourced from AI image tools like Bing Image Creator, Midjourney, Leonardo.ai)
+* Add captions (manual or Whisper AI auto-transcription)
+* Add sound effects or background music (Pixabay or YouTube Audio Library)
+* Add visual overlays (podcast mic, neon lights, glitch effects)
+* Export in vertical 9:16 format, 720p or higher resolution
 
-Output: Talking-head video clip (.mp4)
-🎞️ STAGE 5: Video Editing & Subtitles
+**Output**: Final short video file (.mp4, under 60 seconds)
 
-Tool Options:
+---
 
-    CapCut Desktop/Web/Mobile (TikTok-ready, easiest)
+## 🌐 STAGE 6: Upload + Distribution
 
-    FFmpeg (scripted automation for batch processing)
+**Platforms:**
 
-    Runway (stylized backgrounds, free tier)
+* YouTube Shorts
+* TikTok
+* Instagram Reels
+* Facebook Reels
 
-    Canva Video (browser-based editor)
+**Extras:**
 
-Steps:
+* Use scheduling tools like Metricool or Buffer
+* Add hashtags and viral captions
+* Track views, likes, click-through rates
 
-    Add captions (manual or Whisper AI auto-transcription)
+---
 
-    Add sound effects or background music (Pixabay or YouTube Audio Library)
+## 📁 Project Folder Structure
 
-    Add visual overlays (podcast mic, neon lights, glitch effects)
-
-    Export in vertical 9:16 format, 720p or higher resolution
-
-Output: Final short video file (.mp4, under 60 seconds)
-🌐 STAGE 6: Upload + Distribution
-
-Platforms:
-
-    YouTube Shorts
-
-    TikTok
-
-    Instagram Reels
-
-    Facebook Reels
-
-Extras:
-
-    Use scheduling tools like Metricool or Buffer
-
-    Add hashtags and viral captions
-
-    Track views, likes, click-through rates
-
-📁 Project Folder Structure
-
+```
 ai-viral-shorts-backend/
-│
+|
 ├── app/                            # Main application package
 │   ├── api/                        # Route definitions
 │   │   ├── __init__.py
-│   │   ├── dialogue.py             # Endpoint to trigger dialogue generation
+│   │   ├── dialogue.py             # Endpoint to trigger script generation
+│   │   ├── audio_dialogue.py       # Endpoint to trigger voice generation
 │   │   └── health.py               # Healthcheck/test endpoint
 │   │
 │   ├── core/                       # Core configuration
@@ -129,15 +128,17 @@ ai-viral-shorts-backend/
 │   │
 │   ├── services/                   # Business logic for each AI pipeline stage
 │   │   ├── __init__.py
-│   │   ├── dialogue_gen.py           # Script generation using GPT
+│   │   ├── dialogue_gen.py         # Script generation using GPT
+│   │   └── audio_gen.py            # ElevenLabs audio generation logic
 │   │
 │   ├── models/                     # Pydantic models (request/response schemas)
 │   │   ├── __init__.py
-│   │   └── dialogue_models.py
+│   │   ├── dialogue_models.py
+│   │   └── audio_dialogue_models.py
 │   │
 │   ├── utils/                      # Utility functions and helpers
 │   │   ├── __init__.py
-│   │   └── 
+│   │   └── ...
 │   │
 │   └── main.py                     # FastAPI entry point (creates app instance)
 │
@@ -146,16 +147,14 @@ ai-viral-shorts-backend/
 ├── environment.yml                 # Optional: Conda environment definition
 ├── README.md                       # Project overview and instructions
 └── run.sh                          # Bash script to run the server locally
+```
 
-🔍 Description of Key Folders and Files
+---
 
-    app/api/ — Defines REST API routes (e.g., /generate)
+## 🔍 Description of Key Folders and Files
 
-    app/services/ — Each AI task (script generation, TTS, animation, editing, upload) in modular service files
-
-    app/models/ — Pydantic schemas for request/response validation
-
-    app/core/config.py — Centralized config using Pydantic’s BaseSettings
-
-    run.sh — Simple runner script for local development using uvicorn
-
+* `app/api/` — Defines REST API routes (e.g., `/dialogue`, `/audio_dialogue`)
+* `app/services/` — Each AI task (script generation, TTS, animation, editing, upload) in modular service files
+* `app/models/` — Pydantic schemas for request/response validation
+* `app/core/config.py` — Centralized config using Pydantic’s BaseSettings
+* `run.sh` — Simple runner script for local development using uvicorn
