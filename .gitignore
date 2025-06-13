@@ -171,7 +171,7 @@ cython_debug/
 # Abstra is an AI-powered process automation framework.
 # Ignore directories containing user credentials, local state, and settings.
 # Learn more at https://abstra.io/docs
-.abstra/
+.abstra/    
 
 # Visual Studio Code
 #  Visual Studio Code specific template is maintained in a separate VisualStudioCode.gitignore 
@@ -192,3 +192,16 @@ cython_debug/
 #  refer to https://docs.cursor.com/context/ignore-files
 .cursorignore
 .cursorindexingignore
+
+# Project-specific additions
+*.mp4
+*.mp3
+*.wav
+output/
+outputs/
+logs/
+*.log
+data/
+datasets/
+notebooks/
+    
