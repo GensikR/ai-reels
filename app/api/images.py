@@ -1,5 +1,5 @@
 from fastapi import APIRouter
-from app.models.images_model import ImageGenerationRequest, ImageGenerationResponse
+from app.models.images_models import ImageGenerationRequest, ImageGenerationResponse
 from app.services.images_gen import generate_images_from_script
 
 router = APIRouter()

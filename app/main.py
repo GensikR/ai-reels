@@ -17,3 +17,6 @@ app.include_router(audio_dialogue.router)
 
 from app.api import images
 app.include_router(images.router)
+
+from app.api import video
+app.include_router(video.router, prefix="/api")
