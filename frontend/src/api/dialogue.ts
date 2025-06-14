@@ -1,22 +1,36 @@
 export const generateDialogue = async (
   type: string,
   description: string,
-  images: File[]
+  images: File[],
+  duration: number = 30
 ): Promise<string> => {
   const formData = new FormData();
+
+  // Add scalar fields
   formData.append("type", type);
   formData.append("description", description);
-  images.forEach((img) => formData.append("images", img)); // send multiple image files
+  formData.append("duration", duration.toString());
 
-  const response = await fetch("http://localhost:8000/dialogue", {
-    method: "POST",
-    body: formData
+  // Add image files
+  images.forEach((file) => {
+    formData.append("images", file); // same key for multiple files
   });
 
-  if (!response.ok) {
-    throw new Error("Dialogue generation failed");
-  }
+  try {
+    const response = await fetch("http://localhost:8000/dialogue", {
+      method: "POST",
+      body: formData,
+    });
 
-  const data = await response.json();
-  return data.script;
+    if (!response.ok) {
+      const errorText = await response.text();
+      throw new Error(`Dialogue generation failed: ${errorText}`);
+    }
+
+    const data = await response.json();
+    return data.script;
+  } catch (err) {
+    console.error("generateDialogue error:", err);
+    throw err;
+  }
 };

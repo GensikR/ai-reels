@@ -1,20 +1,23 @@
 export const generateVideo = async (
   audioPath: string,
-  images: File[]
+  images: File[],
+  secondsPerImage: number = 5
 ): Promise<string> => {
   const formData = new FormData();
   formData.append("audio_path", audioPath);
-  images.forEach((img) => formData.append("images", img));
+  formData.append("seconds_per_image", secondsPerImage.toString());
+  images.forEach((file) => formData.append("images", file));
 
   const response = await fetch("http://localhost:8000/video", {
     method: "POST",
-    body: formData
+    body: formData,
   });
 
   if (!response.ok) {
-    throw new Error("Video generation failed");
+    const error = await response.text();
+    throw new Error(`Video generation failed: ${error}`);
   }
 
   const data = await response.json();
-  return data.video_url; // { video_url: "..." }
+  return `http://localhost:8000${data.video_path}`;
 };
