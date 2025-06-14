@@ -15,3 +15,5 @@ from app.api import audio_dialogue
 app.include_router(audio_dialogue.router)
 
 
+from app.api import images
+app.include_router(images.router)
