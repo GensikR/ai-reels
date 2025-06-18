@@ -33,12 +33,11 @@ const Processing = ({ type, description, images, onComplete }: Props) => {
       try {
         // 1️⃣ Generate Dialogue
         setStatusIndex(0);
-        //const dialogue = await generateDialogue(type, description, images);
+        const dialogue = await generateDialogue(type, description, images);
 
         // 2️⃣ Generate + Upload Audio
         setStatusIndex(1);
-        //const audioPath = await generateAudio(dialogue); // returns "temp_audio/generated.wav"
-        const audioPath = "temp_audio/output_latest.mp3"
+        const audioPath = await generateAudio(dialogue);
         // 3️⃣ Generate Video using audio and images
         setStatusIndex(2);
         const videoUrl = await generateVideo(audioPath, images, secondsPerImage);
