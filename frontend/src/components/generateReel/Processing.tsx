@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import StepWrapper from "./StepWrapper";
 import { generateDialogue } from "@/api/get_dialogue";
-import { generateAudio } from "@/api/get_audio"; // uses generateAudioFromColab internally
+import { generateAudio } from "@/api/get_audio"; 
 import { generateVideo } from "@/api/get_video";
 
 interface Props {

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import TypeSelection from "./TypeSelection";
 import Description from "./Description";
+import Dialogue from "./Dialogue.tsx";
 import ImageUpload from "./ImageUpload";
 import ResultsDisplay from "./ResultsDisplay";
 import Processing from "./Processing"
@@ -10,6 +11,8 @@ const GenerateReel = () => {
   const [currentStep, setCurrentStep] = useState<ReelGenerationSteps>("type");
   const [selectedType, setSelectedType] = useState<TypeOptions>("none");
   const [userDescription, setUserDescription] = useState<string>("");
+  const [duration, setDuration] = useState<number>(30);
+  const [dialogue, setDialogue] = useState<string>("");
   const [uploadedImages, setUploadedImages] = useState<File[]>([]);
   const [generatedVideoURL, setGeneratedVideoURL] = useState<string>("");
 
@@ -22,6 +25,9 @@ const GenerateReel = () => {
         setCurrentStep("images");
         break;
       case "images":
+        setCurrentStep("dialogue");
+        break;
+      case "dialogue":
         setCurrentStep("processing");
         break;
       case "processing":
@@ -34,15 +40,21 @@ const GenerateReel = () => {
 
   const handleBackStep = () => {
     switch (currentStep) {
-      case "description":
-        setCurrentStep("type");
+      case "results":
+        setCurrentStep("processing");
+        break;
+      case "processing":
+        setCurrentStep("dialogue");
+        break;
+      case "dialogue":
+        setCurrentStep("images");
         break;
       case "images":
         setCurrentStep("description");
         break;
-      case "results":
-        setCurrentStep("images");
-        break;
+      case "description":
+      setCurrentStep("type");
+      break;
       default:
         break;
     }
@@ -72,6 +84,18 @@ const GenerateReel = () => {
           <ImageUpload
             files={uploadedImages}
             onChange={setUploadedImages}
+            onNext={handleNextStep}
+            onBack={handleBackStep}
+          />
+        )}
+
+        {currentStep === "dialogue" && (
+          <Dialogue 
+            type={selectedType}
+            description={userDescription}
+            images={uploadedImages}
+            duration={duration}
+            onChange={setDialogue}
             onNext={handleNextStep}
             onBack={handleBackStep}
           />
