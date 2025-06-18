@@ -77,12 +77,18 @@ const GenerateReel = () => {
           />
         )}
 
-        {currentStep === "processing" && (
-        <Processing onComplete={(url) => {
+       {currentStep === "processing" && (
+        <Processing
+          type={selectedType}
+          description={userDescription}
+          images={uploadedImages}
+          onComplete={(url) => {
             setGeneratedVideoURL(url);
             setCurrentStep("results");
-        }} />
-        )}
+          }}
+        />
+      )}
+
 
 
         {currentStep === "results" && (

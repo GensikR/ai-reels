@@ -17,7 +17,7 @@ export const generateDialogue = async (
   });
 
   try {
-    const response = await fetch("http://localhost:8000/dialogue", {
+    const response = await fetch("http://localhost:8000/get_dialogue", {
       method: "POST",
       body: formData,
     });
