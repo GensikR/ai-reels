@@ -8,7 +8,7 @@ export const generateVideo = async (
   images.forEach((img) => formData.append("images", img));
   formData.append("seconds_per_image", secondsPerImage.toString());
 
-  const response = await fetch("http://localhost:8000/get_video", {
+  const response = await fetch("/api/get_video", {
     method: "POST",
     body: formData,
   });
