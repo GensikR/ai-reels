@@ -1,5 +1,3 @@
-// Description.tsx
-import React from "react";
 import StepWrapper from "./StepWrapper";
 
 interface Props {

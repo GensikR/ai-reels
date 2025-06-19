@@ -19,6 +19,7 @@ const GenerateReel = () => {
   const handleNextStep = () => {
     switch (currentStep) {
       case "type":
+        setDuration(30) //TODO: JUst to use and avoid warning remove later
         setCurrentStep("description");
         break;
       case "description":
@@ -103,8 +104,7 @@ const GenerateReel = () => {
 
        {currentStep === "processing" && (
         <Processing
-          type={selectedType}
-          description={userDescription}
+          dialogue={dialogue}
           images={uploadedImages}
           onComplete={(url) => {
             setGeneratedVideoURL(url);
@@ -112,17 +112,10 @@ const GenerateReel = () => {
           }}
         />
       )}
-
-
-
         {currentStep === "results" && (
           <ResultsDisplay
-            type={selectedType}
-            description={userDescription}
-            images={uploadedImages}
             videoUrl={generatedVideoURL}
             onBack={handleBackStep}
-            onVideoGenerated={setGeneratedVideoURL}
           />
         )}
       </div>

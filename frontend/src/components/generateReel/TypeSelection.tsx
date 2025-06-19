@@ -1,8 +1,7 @@
 import React from "react";
 import { Newspaper, Ghost, Flame, Laugh } from "lucide-react";
 import StepWrapper from "./StepWrapper";
-
-export type TypeOptions = "none" | "comedy" | "reporting" | "nostalgic" | "motivational";
+import type { TypeOptions } from "@/types";
 
 type Props = {
   value: TypeOptions;
@@ -15,10 +14,10 @@ const options: {
   icon: React.ReactNode;
   value: Exclude<TypeOptions, "none">;
 }[] = [
-  { label: "Comedy", icon: <Laugh className="w-5 h-5" />, value: "comedy" },
+  { label: "Satirical", icon: <Laugh className="w-5 h-5" />, value: "satirical" },
   { label: "Reporting", icon: <Newspaper className="w-5 h-5" />, value: "reporting" },
-  { label: "Nostalgic", icon: <Ghost className="w-5 h-5" />, value: "nostalgic" },
-  { label: "Motivational", icon: <Flame className="w-5 h-5" />, value: "motivational" },
+  { label: "Commercial", icon: <Ghost className="w-5 h-5" />, value: "commercial" },
+  { label: "Portfolio", icon: <Flame className="w-5 h-5" />, value: "portfolio" },
 ];
 
 const TypeSelection = ({ value, onChange, onNext }: Props) => {

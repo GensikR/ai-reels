@@ -1,24 +1,20 @@
 import { useEffect, useState } from "react";
 import StepWrapper from "./StepWrapper";
-import { generateDialogue } from "@/api/get_dialogue";
-import { generateAudio } from "@/api/get_audio"; 
 import { generateVideo } from "@/api/get_video";
 
 interface Props {
-  type: string;
-  description: string;
+  dialogue: string;
   images: File[];
   onComplete: (videoUrl: string) => void;
 }
 
 const statusMessages = [
-  "Generating script...",
   "Synthesizing voice...",
   "Rendering video...",
   "Finalizing output..."
 ];
 
-const Processing = ({ type, description, images, onComplete }: Props) => {
+const Processing = ({ dialogue, images, onComplete }: Props) => {
   const [statusIndex, setStatusIndex] = useState(0);
   const [error, setError] = useState<string | null>(null);
   const secondsPerImage = 5;
@@ -31,31 +27,28 @@ const Processing = ({ type, description, images, onComplete }: Props) => {
       }
 
       try {
-        // 1️⃣ Generate Dialogue
+        // 1️⃣ Generate Audio
         setStatusIndex(0);
-        const dialogue = await generateDialogue(type, description, images);
-
-        // 2️⃣ Generate + Upload Audio
+        //const audioPath = await generateAudio(dialogue);
+        const audioPath = "temp_audio/output_latest.mp3";
+        // 2️⃣ Generate Video
         setStatusIndex(1);
-        const audioPath = await generateAudio(dialogue);
-        // 3️⃣ Generate Video using audio and images
-        setStatusIndex(2);
         const videoUrl = await generateVideo(audioPath, images, secondsPerImage);
 
-        // ✅ 4️⃣ Done
-        setStatusIndex(3);
-        setTimeout(() => onComplete(videoUrl), 1000); 
+        // ✅ 3️⃣ Done
+        setStatusIndex(2);
+        setTimeout(() => onComplete(videoUrl), 1000);
       } catch (err) {
-        console.error("Pipeline failed:", err);
+        console.error("Video generation failed:", err);
         setError("Something went wrong during video generation. Please try again.");
       }
     };
 
     processPipeline();
-  }, [type, description, images, onComplete]);
+  }, [dialogue, images, onComplete]);
 
   return (
-    <StepWrapper title="Step 4: Processing Your Video 🎬">
+    <StepWrapper title="Step 4: Generating Your Final Video 🎥">
       <div className="text-center text-white animate-pulse text-lg mt-4">
         {error ? "❌ Error" : statusMessages[statusIndex]}
       </div>

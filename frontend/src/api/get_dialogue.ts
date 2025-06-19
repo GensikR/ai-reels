@@ -2,35 +2,43 @@ export const generateDialogue = async (
   type: string,
   description: string,
   images: File[],
-  duration: number = 30
+  duration: number = 15
 ): Promise<string> => {
-  const formData = new FormData();
+  const base64Images: string[] = await Promise.all(
+    images.map(async (file) => {
+      const base64 = await toBase64(file);
+      return base64 as string;
+    })
+  );
 
-  // Add scalar fields
-  formData.append("type", type);
-  formData.append("description", description);
-  formData.append("duration", duration.toString());
-
-  // Add image files
-  images.forEach((file) => {
-    formData.append("images", file); // same key for multiple files
+  const response = await fetch("http://localhost:8000/get_dialogue", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      type,
+      description,
+      images: base64Images,
+      duration,
+    }),
   });
 
-  try {
-    const response = await fetch("http://localhost:8000/get_dialogue", {
-      method: "POST",
-      body: formData,
-    });
-
-    if (!response.ok) {
-      const errorText = await response.text();
-      throw new Error(`Dialogue generation failed: ${errorText}`);
-    }
-
-    const data = await response.json();
-    return data.script;
-  } catch (err) {
-    console.error("generateDialogue error:", err);
-    throw err;
+  if (!response.ok) {
+    const text = await response.text();
+    throw new Error(`Dialogue generation failed: ${text}`);
   }
+
+  const data = await response.json();
+  return data.script; // ✅ FIXED HERE
 };
+
+
+// Utility: convert File -> base64
+const toBase64 = (file: File): Promise<string> =>
+  new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => resolve(reader.result as string);
+    reader.onerror = reject;
+  });

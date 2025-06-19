@@ -1,21 +1,12 @@
 import StepWrapper from "./StepWrapper";
-import type { TypeOptions } from "@/types";
 
 interface Props {
-  type: TypeOptions;
-  description: string;
-  images: File[];
   videoUrl: string;
-  onVideoGenerated: (url: string) => void;
   onBack: () => void;
 }
 
 const ResultsDisplay = ({
-  type,
-  description,
-  images,
   videoUrl,
-  onVideoGenerated,
   onBack
 }: Props) => {
   // Use full URL if videoUrl is a relative path
