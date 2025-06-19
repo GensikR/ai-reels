@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import StepWrapper from "./StepWrapper";
 import { generateVideo } from "@/api/get_video";
+import { generateAudio } from "@/api/get_audio";
 
 interface Props {
   dialogue: string;
@@ -29,8 +30,7 @@ const Processing = ({ dialogue, images, onComplete }: Props) => {
       try {
         // 1️⃣ Generate Audio
         setStatusIndex(0);
-        //const audioPath = await generateAudio(dialogue);
-        const audioPath = "temp_audio/output_latest.mp3";
+        const audioPath = await generateAudio(dialogue);
         // 2️⃣ Generate Video
         setStatusIndex(1);
         const videoUrl = await generateVideo(audioPath, images, secondsPerImage);
