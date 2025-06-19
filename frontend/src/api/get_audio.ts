@@ -1,6 +1,7 @@
 export const generateAudio = async (
   script: string,
-  voiceId: string = "JBFqnCBsd6RMkjVDRZzb"
+  //voiceId: string = "JBFqnCBsd6RMkjVDRZzb"  //Eleven Labs
+  voiceId: string = "en-US-Wavenet-D" //Google TTS
 ): Promise<string> => {
   const response = await fetch("/api/get_audio", {
     method: "POST",
