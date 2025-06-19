@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Form, UploadFile, File
 from fastapi.responses import JSONResponse
 from app.services.video_gen import generate_video
-from app.models import VideoGenerationResponse
+from app.models.video_models import VideoGenerationResponse
 import os
 
 router = APIRouter()
