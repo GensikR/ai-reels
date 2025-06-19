@@ -28,9 +28,12 @@ const Processing = ({ dialogue, images, onComplete }: Props) => {
       }
 
       try {
+        setError(null); // Clear any previous error
+
         // 1️⃣ Generate Audio
         setStatusIndex(0);
         const audioPath = await generateAudio(dialogue);
+
         // 2️⃣ Generate Video
         setStatusIndex(1);
         const videoUrl = await generateVideo(audioPath, images, secondsPerImage);
@@ -38,9 +41,9 @@ const Processing = ({ dialogue, images, onComplete }: Props) => {
         // ✅ 3️⃣ Done
         setStatusIndex(2);
         setTimeout(() => onComplete(videoUrl), 1000);
-      } catch (err) {
+      } catch (err: any) {
         console.error("Video generation failed:", err);
-        setError("Something went wrong during video generation. Please try again.");
+        setError(err.message || "Something went wrong during video generation.");
       }
     };
 

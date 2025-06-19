@@ -6,36 +6,45 @@ async def generate_video(
     image_paths: List[str],
     audio_path: str,
     output_path: str,
-    seconds_per_image: int = 5  # Default to 5 seconds per image
+    seconds_per_image: int = 5
 ) -> str:
     list_file = 'inputs.txt'
 
-    # 📝 Write FFmpeg concat list
+    # ✅ Write FFmpeg-compatible input list
     with open(list_file, 'w') as f:
         for img in image_paths:
-            f.write(f"file '{img}'\n")
+            abs_img = os.path.abspath(img)
+            f.write(f"file '{abs_img}'\n")
             f.write(f"duration {seconds_per_image}\n")
-        f.write(f"file '{image_paths[-1]}'\n")  # Repeat last image for freeze-frame at end
+        # Repeat last image to avoid FFmpeg cut-off
+        f.write(f"file '{os.path.abspath(image_paths[-1])}'\n")
 
-    # 📂 Make sure output directory exists
+    # 📂 Ensure output directory exists
     os.makedirs(os.path.dirname(output_path), exist_ok=True)
 
-    # 🎬 Run FFmpeg (❌ no -r here)
+    # 🎬 Build FFmpeg command
     cmd = [
         'ffmpeg',
         '-y',
         '-f', 'concat',
         '-safe', '0',
         '-i', list_file,
-        '-i', audio_path,
-        '-vsync', 'vfr',  # important to respect per-image durations
+        '-i', os.path.abspath(audio_path),
+        '-vsync', 'vfr',
         '-pix_fmt', 'yuv420p',
         '-c:v', 'libx264',
         '-c:a', 'aac',
         '-shortest',
-        output_path
+        os.path.abspath(output_path)
     ]
 
-    subprocess.run(cmd, check=True)
-    os.remove(list_file)
+    # 🛠️ Run the command and catch errors
+    try:
+        subprocess.run(cmd, check=True)
+    except subprocess.CalledProcessError as e:
+        raise RuntimeError(f"FFmpeg failed:\n{e}")
+    finally:
+        if os.path.exists(list_file):
+            os.remove(list_file)
+
     return output_path

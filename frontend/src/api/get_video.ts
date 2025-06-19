@@ -8,7 +8,7 @@ export const generateVideo = async (
   images.forEach((img) => formData.append("images", img));
   formData.append("seconds_per_image", secondsPerImage.toString());
 
-  const response = await fetch("/api/get_video", {
+  const response = await fetch("http://localhost:8000/get_video", {
     method: "POST",
     body: formData,
   });
@@ -18,11 +18,11 @@ export const generateVideo = async (
     throw new Error(`Video generation failed: ${errorText}`);
   }
 
-  // ✅ Get the video file as a blob, not JSON
-  const blob = await response.blob();
+  // ✅ Parse backend JSON response
+  const data = await response.json();
 
-  // 🎥 Create an object URL for use in <video> src
-  const videoUrl = URL.createObjectURL(blob);
-
-  return videoUrl;
+  // ✅ Construct full URL (assumes video is hosted by NGINX or FastAPI static)
+  return data.video_path.startsWith("http")
+    ? data.video_path
+    : `http://localhost:8000${data.video_path}`;
 };
