@@ -11,7 +11,7 @@ export const generateDialogue = async (
     })
   );
 
-  const response = await fetch("http://localhost:8000/get_dialogue", {
+  const response = await fetch("/api/get_dialogue", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",

@@ -17,7 +17,7 @@ export const generateVideo = async (
   formData.append("seconds_per_image", secondsPerImage.toString());
 
   // 🚀 Send to backend
-  const response = await fetch("http://localhost:8000/get_video", {
+  const response = await fetch("/api/get_video", {
     method: "POST",
     body: formData,
   });

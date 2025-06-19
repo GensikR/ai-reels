@@ -2,7 +2,7 @@ export const generateAudio = async (
   script: string,
   voiceId: string = "JBFqnCBsd6RMkjVDRZzb"
 ): Promise<string> => {
-  const response = await fetch("http://localhost:8000/get_audio", {
+  const response = await fetch("/api/get_audio", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
