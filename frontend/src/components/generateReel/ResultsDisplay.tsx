@@ -5,16 +5,7 @@ interface Props {
   onBack: () => void;
 }
 
-const ResultsDisplay = ({
-  videoUrl,
-  onBack
-}: Props) => {
-  // Use full URL if videoUrl is a relative path
-  const fullVideoUrl = videoUrl.startsWith("http")
-  ? videoUrl
-  : `http://localhost:8000/${videoUrl.replace(/^\/+/, "")}`;
-
-
+const ResultsDisplay = ({ videoUrl, onBack }: Props) => {
   return (
     <StepWrapper title="Step 4: Your Video is Ready 🎉" onBack={onBack}>
       {!videoUrl ? (
@@ -25,15 +16,10 @@ const ResultsDisplay = ({
             controls
             className="w-full rounded-xl shadow-lg mt-4 max-w-3xl"
             preload="auto"
+            src={videoUrl} // ✅ Use directly as it may be a blob URL
           >
-            <source src={fullVideoUrl} type="video/mp4" />
             Your browser does not support the video tag.
           </video>
-
-          {/* Optional: Show metadata */}
-          {/* <p className="text-sm text-white/70 mt-4 text-center">
-            Type: {type} | Description: {description}
-          </p> */}
         </div>
       )}
     </StepWrapper>

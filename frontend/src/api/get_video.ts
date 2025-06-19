@@ -18,9 +18,11 @@ export const generateVideo = async (
     throw new Error(`Video generation failed: ${errorText}`);
   }
 
-  const data = await response.json();
+  // ✅ Get the video file as a blob, not JSON
+  const blob = await response.blob();
 
-  // ✅ Since backend returns a relative path like /temp_output/video.mp4
-  // and it's served via NGINX, this is valid:
-  return data.video_path;
+  // 🎥 Create an object URL for use in <video> src
+  const videoUrl = URL.createObjectURL(blob);
+
+  return videoUrl;
 };
